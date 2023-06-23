@@ -92,9 +92,8 @@ def get_masternode_rewards_total(address, since):
     endpoint = f"ext/getmasternoderewardstotal/{address}/{since}"
     return make_api_call(endpoint)
 
-# Function to display the menu options
+# Display menu options
 def display_menu():
-    print("Menu:")
     print("1. Get Current Block Count")
     print("2. Get Masternode Information")
     print("3. Get Basic Statistics")
@@ -102,7 +101,15 @@ def display_menu():
     print("5. Get Money Supply")
     print("6. Get Network Hashrate")
     print("7. Get Address Information")
-    print("8. Exit")
+    print("8. Get Last Transactions")
+    print("9. Get Transaction")
+    print("10. Get Balance")
+    print("11. Get Current Price")
+    print("12. Get Network Peers")
+    print("13. Get Summary")
+    print("14. Get Masternode Rewards")
+    print("15. Get Masternode Rewards Total")
+    print("16. Exit")
 
 # Retrieve current block count
 def get_current_block_count():
@@ -147,7 +154,7 @@ def get_basic_statistics():
 def get_difficulty_data():
     difficulty_data = get_difficulty()
     if difficulty_data is not None:
-        print(difficulty_data)
+        print(f"Difficulty: {difficulty_data}")
     else:
         print("Failed to retrieve difficulty.")
 
@@ -176,35 +183,120 @@ def get_address_info_data():
     else:
         print("Failed to retrieve address information.")
 
-# Main program loop
-while True:
-    display_menu()
-    choice = input("Enter your choice (1-8): ")
-
-    if choice == '1':
-        get_current_block_count()
-
-    elif choice == '2':
-        get_masternode_info()
-
-    elif choice == '3':
-        get_basic_statistics()
-
-    elif choice == '4':
-        get_difficulty_data()
-
-    elif choice == '5':
-        get_money_supply_data()
-
-    elif choice == '6':
-        get_network_hashrate_data()
-
-    elif choice == '7':
-        get_address_info_data()
-
-    elif choice == '8':
-        print("Exiting...")
-        break
-
+# Retrieve last transactions
+def get_last_transactions_data():
+    min_coins = input("Enter the min coins: ")
+    start = input("Enter the start value: ")
+    length = input("Enter the length value: ")
+    last_transactions_data = get_last_transactions(min_coins, start, length)
+    if last_transactions_data is not None:
+        print(f"Last Transactions: {last_transactions_data}")
     else:
-        print("Invalid choice. Please try again.\n")
+        print("Failed to retrieve last transactions.")
+
+# Retrieve transaction
+def get_transaction_data():
+    tx_hash = input("Enter the transaction hash: ")
+    transaction_data = get_transaction(tx_hash)
+    if transaction_data is not None:
+        print(f"Transaction: {transaction_data}")
+    else:
+        print("Failed to retrieve transaction.")
+
+# Retrieve balance
+def get_balance_data():
+    address = input("Enter the address: ")
+    balance_data = get_balance(address)
+    if balance_data is not None:
+        print(f"Balance: {balance_data}")
+    else:
+        print("Failed to retrieve balance.")
+
+# Retrieve current price
+def get_current_price_data():
+    current_price_data = get_current_price()
+    if current_price_data is not None:
+        print(f"Current Price: {current_price_data}")
+    else:
+        print("Failed to retrieve current price.")
+
+# Retrieve network peers
+def get_network_peers_data():
+    network_peers_data = get_network_peers()
+    if network_peers_data is not None:
+        print(f"Network Peers: {network_peers_data}")
+    else:
+        print("Failed to retrieve network peers.")
+
+# Retrieve summary
+def get_summary_data():
+    summary_data = get_summary()
+    if summary_data is not None:
+        print(f"Summary: {summary_data}")
+    else:
+        print("Failed to retrieve summary.")
+
+# Retrieve masternode rewards
+def get_masternode_rewards_data():
+    address = input("Enter the address: ")
+    since = input("Enter the 'since' value: ")
+    masternode_rewards_data = get_masternode_rewards(address, since)
+    if masternode_rewards_data is not None:
+        print(f"Masternode Rewards: {masternode_rewards_data}")
+    else:
+        print("Failed to retrieve masternode rewards.")
+
+# Retrieve masternode rewards total
+def get_masternode_rewards_total_data():
+    address = input("Enter the address: ")
+    since = input("Enter the 'since' value: ")
+    masternode_rewards_total_data = get_masternode_rewards_total(address, since)
+    if masternode_rewards_total_data is not None:
+        print(f"Masternode Rewards Total: {masternode_rewards_total_data}")
+    else:
+        print("Failed to retrieve masternode rewards total.")
+
+# Main program loop
+def main():
+    while True:
+        display_menu()
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            get_current_block_count()
+        elif choice == "2":
+            get_masternode_info()
+        elif choice == "3":
+            get_basic_statistics()
+        elif choice == "4":
+            get_difficulty_data()
+        elif choice == "5":
+            get_money_supply_data()
+        elif choice == "6":
+            get_network_hashrate_data()
+        elif choice == "7":
+            get_address_info_data()
+        elif choice == "8":
+            get_last_transactions_data()
+        elif choice == "9":
+            get_transaction_data()
+        elif choice == "10":
+            get_balance_data()
+        elif choice == "11":
+            get_current_price_data()
+        elif choice == "12":
+            get_network_peers_data()
+        elif choice == "13":
+            get_summary_data()
+        elif choice == "14":
+            get_masternode_rewards_data()
+        elif choice == "15":
+            get_masternode_rewards_total_data()
+        elif choice == "16":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
