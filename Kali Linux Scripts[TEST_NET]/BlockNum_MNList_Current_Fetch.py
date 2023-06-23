@@ -109,7 +109,14 @@ def display_menu():
     print("13. Get Summary")
     print("14. Get Masternode Rewards")
     print("15. Get Masternode Rewards Total")
-    print("16. Exit")
+    print("16. Get Connection Count")
+    print("17. Get Block Hash")
+    print("18. Get Block")
+    print("19. Get Raw Transaction")
+    print("20. Get Vote List")
+    print("21. Get Distribution")
+    print("22. Get Masternode Count")
+    print("23. Exit")
 
 # Retrieve current block count
 def get_current_block_count():
@@ -255,48 +262,117 @@ def get_masternode_rewards_total_data():
         print(f"Masternode Rewards Total: {masternode_rewards_total_data}")
     else:
         print("Failed to retrieve masternode rewards total.")
+        
+# Retrieve connection count
+def get_connection_count_data():
+    connection_count_data = get_connection_count()
+    if connection_count_data is not None:
+        print(f"Connection Count: {connection_count_data}")
+    else:
+        print("Failed to retrieve connection count.")
+
+# Retrieve block hash
+def get_block_hash_data():
+    index = input("Enter the block index: ")
+    block_hash_data = get_block_hash(index)
+    if block_hash_data is not None:
+        print(f"Block Hash: {block_hash_data}")
+    else:
+        print("Failed to retrieve block hash.")
+
+# Retrieve block
+def get_block_data():
+    block_hash = input("Enter the block hash: ")
+    block_data = get_block(block_hash)
+    if block_data is not None:
+        print(f"Block: {block_data}")
+    else:
+        print("Failed to retrieve block.")
+
+# Retrieve raw transaction
+def get_raw_transaction_data():
+    txid = input("Enter the transaction ID: ")
+    decrypt = input("Enter 'true' to decrypt transaction, 'false' otherwise: ")
+    raw_transaction_data = get_raw_transaction(txid, decrypt)
+    if raw_transaction_data is not None:
+        print(f"Raw Transaction: {raw_transaction_data}")
+    else:
+        print("Failed to retrieve raw transaction.")
+
+# Retrieve vote list
+def get_vote_list_data():
+    vote_list_data = get_vote_list()
+    if vote_list_data is not None:
+        print(f"Vote List: {vote_list_data}")
+    else:
+        print("Failed to retrieve vote list.")
+
+# Retrieve distribution
+def get_distribution_data():
+    distribution_data = get_distribution()
+    if distribution_data is not None:
+        print(f"Distribution: {distribution_data}")
+    else:
+        print("Failed to retrieve distribution.")
+
+# Retrieve masternode count
+def get_masternode_count_data():
+    masternode_count_data = get_masternode_count()
+    if masternode_count_data is not None:
+        print(f"Masternode Count: {masternode_count_data}")
+    else:
+        print("Failed to retrieve masternode count.")
 
 # Main program loop
-def main():
-    while True:
-        display_menu()
-        choice = input("Enter your choice: ")
+while True:
+    display_menu()
+    choice = input("Enter your choice: ")
 
-        if choice == "1":
-            get_current_block_count()
-        elif choice == "2":
-            get_masternode_info()
-        elif choice == "3":
-            get_basic_statistics()
-        elif choice == "4":
-            get_difficulty_data()
-        elif choice == "5":
-            get_money_supply_data()
-        elif choice == "6":
-            get_network_hashrate_data()
-        elif choice == "7":
-            get_address_info_data()
-        elif choice == "8":
-            get_last_transactions_data()
-        elif choice == "9":
-            get_transaction_data()
-        elif choice == "10":
-            get_balance_data()
-        elif choice == "11":
-            get_current_price_data()
-        elif choice == "12":
-            get_network_peers_data()
-        elif choice == "13":
-            get_summary_data()
-        elif choice == "14":
-            get_masternode_rewards_data()
-        elif choice == "15":
-            get_masternode_rewards_total_data()
-        elif choice == "16":
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Please try again.")
-
-if __name__ == "__main__":
-    main()
+    if choice == "1":
+        get_current_block_count()
+    elif choice == "2":
+        get_masternode_info()
+    elif choice == "3":
+        get_basic_statistics()
+    elif choice == "4":
+        get_difficulty_data()
+    elif choice == "5":
+        get_money_supply_data()
+    elif choice == "6":
+        get_network_hashrate_data()
+    elif choice == "7":
+        get_address_info_data()
+    elif choice == "8":
+        get_last_transactions_data()
+    elif choice == "9":
+        get_transaction_data()
+    elif choice == "10":
+        get_balance_data()
+    elif choice == "11":
+        get_current_price_data()
+    elif choice == "12":
+        get_network_peers_data()
+    elif choice == "13":
+        get_summary_data()
+    elif choice == "14":
+        get_masternode_rewards_data()
+    elif choice == "15":
+        get_masternode_rewards_total_data()
+    elif choice == "16":
+        get_connection_count_data()
+    elif choice == "17":
+        get_block_hash_data()
+    elif choice == "18":
+        get_block_data()
+    elif choice == "19":
+        get_raw_transaction_data()
+    elif choice == "20":
+        get_vote_list_data()
+    elif choice == "21":
+        get_distribution_data()
+    elif choice == "22":
+        get_masternode_count_data()
+    elif choice == "23":
+        break
+    else:
+        print("Invalid choice. Please try again.")
