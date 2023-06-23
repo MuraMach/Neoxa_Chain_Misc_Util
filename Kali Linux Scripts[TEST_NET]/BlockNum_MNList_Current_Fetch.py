@@ -92,45 +92,82 @@ def get_masternode_rewards_total(address, since):
     endpoint = f"ext/getmasternoderewardstotal/{address}/{since}"
     return make_api_call(endpoint)
 
+# Function to display the menu options
+def display_menu():
+    print("Menu:")
+    print("1. Get Current Block Count")
+    print("2. Get Masternode Information")
+    print("3. Get Basic Statistics")
+    print("4. Get Difficulty")
+    print("5. Exit")
+
 # Retrieve current block count
-block_count_data = get_block_count()
-if block_count_data is not None:
-    if isinstance(block_count_data, int):
-        block_count = block_count_data
+def get_current_block_count():
+    block_count_data = get_block_count()
+    if block_count_data is not None:
+        if isinstance(block_count_data, int):
+            block_count = block_count_data
+        else:
+            block_count = block_count_data['result']
+        print(f"Current Block Count: {block_count}")
     else:
-        block_count = block_count_data['result']
-    print(f"Current Block Count: {block_count}")
-else:
-    print("Failed to retrieve block count.")
+        print("Failed to retrieve block count.")
 
 # Retrieve masternode information
-masternodes_data = get_masternode_list()
-if masternodes_data is not None:
-    for masternode in masternodes_data:
-        print(f"- IP: {masternode['addr']}, Status: {masternode['status']}")
-else:
-    print("Failed to retrieve masternode information.")
+def get_masternode_info():
+    masternodes_data = get_masternode_list()
+    if masternodes_data is not None:
+        for masternode in masternodes_data:
+            print(f"- IP: {masternode['addr']}, Status: {masternode['status']}")
+    else:
+        print("Failed to retrieve masternode information.")
 
 # Retrieve basic statistics
-basic_stats_data = get_basic_stats()
-if basic_stats_data is not None:
-    block_count = basic_stats_data['block_count']
-    money_supply = basic_stats_data['money_supply']
-    last_price_btc = basic_stats_data['last_price_btc']
-    last_price_usd = basic_stats_data['last_price_usd']
-    masternode_count = basic_stats_data['masternode_count']
+def get_basic_statistics():
+    basic_stats_data = get_basic_stats()
+    if basic_stats_data is not None:
+        block_count = basic_stats_data['block_count']
+        money_supply = basic_stats_data['money_supply']
+        last_price_btc = basic_stats_data['last_price_btc']
+        last_price_usd = basic_stats_data['last_price_usd']
+        masternode_count = basic_stats_data['masternode_count']
 
-    print(f"Block Count: {block_count}")
-    print(f"Money Supply: {money_supply}")
-    print(f"Last Price (BTC): {last_price_btc}")
-    print(f"Last Price (USD): {last_price_usd}")
-    print(f"Masternode Count: {masternode_count}")
-else:
-    print("Failed to retrieve basic statistics.")
+        print(f"Block Count: {block_count}")
+        print(f"Money Supply: {money_supply}")
+        print(f"Last Price (BTC): {last_price_btc}")
+        print(f"Last Price (USD): {last_price_usd}")
+        print(f"Masternode Count: {masternode_count}")
+    else:
+        print("Failed to retrieve basic statistics.")
 
+# Retrieve difficulty
+def get_difficulty_data():
+    difficulty_data = get_difficulty()
+    if difficulty_data is not None:
+        print(difficulty_data)
+    else:
+        print("Failed to retrieve difficulty.")
 
+# Main program loop
+while True:
+    display_menu()
+    choice = input("Enter your choice (1-5): ")
 
+    if choice == '1':
+        get_current_block_count()
 
+    elif choice == '2':
+        get_masternode_info()
 
+    elif choice == '3':
+        get_basic_statistics()
 
+    elif choice == '4':
+        get_difficulty_data()
 
+    elif choice == '5':
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice. Please try again.\n")
