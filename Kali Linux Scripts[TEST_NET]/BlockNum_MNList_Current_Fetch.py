@@ -99,7 +99,10 @@ def display_menu():
     print("2. Get Masternode Information")
     print("3. Get Basic Statistics")
     print("4. Get Difficulty")
-    print("5. Exit")
+    print("5. Get Money Supply")
+    print("6. Get Network Hashrate")
+    print("7. Get Address Information")
+    print("8. Exit")
 
 # Retrieve current block count
 def get_current_block_count():
@@ -148,10 +151,35 @@ def get_difficulty_data():
     else:
         print("Failed to retrieve difficulty.")
 
+# Retrieve money supply
+def get_money_supply_data():
+    money_supply_data = get_money_supply()
+    if money_supply_data is not None:
+        print(f"Money Supply: {money_supply_data}")
+    else:
+        print("Failed to retrieve money supply.")
+
+# Retrieve network hashrate
+def get_network_hashrate_data():
+    network_hashrate_data = get_network_hashrate()
+    if network_hashrate_data is not None:
+        print(f"Network Hashrate: {network_hashrate_data}")
+    else:
+        print("Failed to retrieve network hashrate.")
+
+# Retrieve address information
+def get_address_info_data():
+    address = input("Enter the address: ")
+    address_info_data = get_address_info(address)
+    if address_info_data is not None:
+        print(f"Address Information: {address_info_data}")
+    else:
+        print("Failed to retrieve address information.")
+
 # Main program loop
 while True:
     display_menu()
-    choice = input("Enter your choice (1-5): ")
+    choice = input("Enter your choice (1-8): ")
 
     if choice == '1':
         get_current_block_count()
@@ -166,6 +194,15 @@ while True:
         get_difficulty_data()
 
     elif choice == '5':
+        get_money_supply_data()
+
+    elif choice == '6':
+        get_network_hashrate_data()
+
+    elif choice == '7':
+        get_address_info_data()
+
+    elif choice == '8':
         print("Exiting...")
         break
 
