@@ -1,0 +1,5 @@
+Next steps [PORT FROM TESTNET TO MAINNET] then:
+Easy Console Clearing for console GUI.
+Python GUI.
+Output file saving option.
+
