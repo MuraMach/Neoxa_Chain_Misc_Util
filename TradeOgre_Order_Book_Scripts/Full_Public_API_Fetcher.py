@@ -62,6 +62,32 @@ def get_trade_history(market):
         print(f"Error: {response.status_code} - {response.text}")
         return None
 
+def display_market_info(markets):
+    print("Available Markets:")
+    for market in markets:
+        print(market)
+
+def display_order_book(order_book):
+    if order_book:
+        print("Order Book:")
+        print(order_book)
+    else:
+        print("Failed to retrieve the order book.")
+
+def display_ticker(ticker):
+    if ticker:
+        print("Ticker:")
+        print(ticker)
+    else:
+        print("Failed to retrieve the ticker.")
+
+def display_trade_history(trade_history):
+    if trade_history:
+        print("Trade History:")
+        print(trade_history)
+    else:
+        print("Failed to retrieve the trade history.")
+
 def main():
     print("Welcome to the TradeOgre Public API Client!")
     print("Choose an option:")
@@ -74,31 +100,22 @@ def main():
     
     if choice == '1':
         markets = get_markets()
-        if markets:
-            print("Markets:")
-            for market in markets:
-                print(market)
+        display_market_info(markets)
     
     elif choice == '2':
         market = input("Enter the market (e.g., XMR-BTC): ")
         order_book = get_order_book(market)
-        if order_book:
-            print("Order Book:")
-            print(order_book)
+        display_order_book(order_book)
     
     elif choice == '3':
         market = input("Enter the market (e.g., XMR-BTC): ")
         ticker = get_ticker(market)
-        if ticker:
-            print("Ticker:")
-            print(ticker)
+        display_ticker(ticker)
     
     elif choice == '4':
         market = input("Enter the market (e.g., XMR-BTC): ")
         trade_history = get_trade_history(market)
-        if trade_history:
-            print("Trade History:")
-            print(trade_history)
+        display_trade_history(trade_history)
     
     else:
         print("Invalid choice. Please try again.")
