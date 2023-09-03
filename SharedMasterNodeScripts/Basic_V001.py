@@ -62,6 +62,8 @@ def calculate_and_send_payments(recipient_data, total_rewards, total_stake):
                 print(f"Payment of {formatted_amount} coins sent to {address}. Transaction ID: {txid}")
             except Exception as e:
                 print(f"Sending payment to {address}: {e}")
+# Implementing proper TXID print results along sent to address. Replacement for like 62 - Comment Currently.           
+# print(f"Payment of {formatted_amount} coins sent to {address}. Transaction ID: {txid['result']}")
 
 # Function for Timelock (not implemented yet)
 def timelock():
