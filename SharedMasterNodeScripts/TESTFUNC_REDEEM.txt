@@ -1,0 +1,15 @@
+# Function to create a redemption transaction not implemented.
+def create_redemption_tx(input_txid, input_vout, participant_pubkey, collateral_amount, recipient_address):
+    tx = CTransaction()
+
+    # Add the collateral input to the transaction
+    tx.add_in(CTxIn(COutPoint(int(input_txid, 16), input_vout)))
+
+    # Create the output paying the participant's collateral to their recipient address
+    participant_output = CTxOut(collateral_amount, CScript([OP_DUP, OP_HASH160, bytes.fromhex(participant_pubkey), OP_EQUALVERIFY, OP_CHECKSIG]))
+    recipient_output = CTxOut(0, CScript([CScript.build([participant_pubkey]), 0x52]))  # Replace '0x52' with the recipient's scriptPubKey
+
+    tx.add_out(participant_output)
+    tx.add_out(recipient_output)
+
+    return tx
