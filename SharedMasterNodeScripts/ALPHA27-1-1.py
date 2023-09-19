@@ -30,14 +30,13 @@ def connect_to_dash_rpc():
     # Replace with code to establish an RPC connection to Dash network
     pass
 
-# Function to deposit collateral (Participant)
+# Function for participants to deposit collateral
 def deposit_collateral():
-    global masternode_status
-    try:
-        # Implement logic to deposit collateral (replace with actual logic)
-        print("Collateral deposited successfully.")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+    ##global and errors needed
+    participant_pubkey = input("Enter your public key: ")
+    collateral_amount = float(input("Enter your collateral amount (in DASH): "))
+    participants[participant_pubkey] = {'collateral_amount': collateral_amount}
+    print(f"Collateral of {collateral_amount} DASH deposited for participant {participant_pubkey}")
 
 
 # Function to check collateral (Participant)
