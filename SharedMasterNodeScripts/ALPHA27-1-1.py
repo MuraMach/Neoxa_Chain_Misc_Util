@@ -1,19 +1,15 @@
-# Import standard libraries
+from dash import DashCoreRPC, CTransaction, CTxIn, CTxOut, CScript, OP_HASH160, hex_str_to_bytes, OP_EQUAL
+import hashlib
+import time
 import sys  # For system-related functions
 import json  # For JSON handling (if needed)
 import time  # For handling time-related operations
 import traceback  # For tracing exceptions (if needed)
-
-# Import Dash-related libraries (replace with the actual libraries you're using)
 import dashrpc  # Replace with your Dash RPC library
 from dashrpc.exceptions import DashRPCException  # Exception handling for Dash RPC
-
-# Other Dash-specific modules (if needed)
 import dashcore  # For handling Dash core functionality
 import dashutils  # For utility functions specific to Dash
 
-# Custom modules (if you have any)
-# import mymodule  # Import your custom module
 
 # Global variable to store masternode status
 masternode_status = {
@@ -49,15 +45,22 @@ def check_collateral():
         print(f"An error occurred: {str(e)}")
 
 
-# Function to combine participants' collateral (Operator)
-def combine_participants_collateral():
-    global masternode_status
-    try:
-        # Implement logic to combine participants' collateral (replace with actual logic)
-        print("Collateral combination successful.")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-
+# Function to combine participants' collateral by the operator
+def combine_participants_collateral(multisig_address):
+    total_collateral = sum(participant['collateral_amount'] for participant in participants.values())
+    # Verify that the total collateral meets the required amount for masternode setup
+    if total_collateral >= required_total_collateral:
+        tx = create_transaction([], {multisig_address: total_collateral})
+        if broadcast_transaction(tx):
+            print(f"Combined {total_collateral} collateral from participants into multisig address {multisig_address}")
+            participants.clear()  # Clear participant data after successful combination
+            return True
+        else:
+            print("Failed to broadcast the transaction.")
+            return False
+    else:
+        print("Total collateral is insufficient for masternode setup.")
+        return False
 
 # Function to create a redemption transaction (Participant)
 def create_redemption_transaction():
@@ -69,15 +72,24 @@ def create_redemption_transaction():
         print(f"An error occurred: {str(e)}")
 
 
-# Function to withdraw collateral (Participant)
+# Function for participants to withdraw their collateral
 def withdraw_collateral():
-    global masternode_status
-    try:
-        # Implement logic to withdraw collateral (replace with actual logic)
-        print("Collateral withdrawal successful.")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+    participant_pubkey = input("Enter your public key: ")
+    if participant_pubkey not in participants:
+        print("Participant not found.")
+        return
+    collateral_amount = participants[participant_pubkey]['collateral_amount']
+    withdrawal_address = input("Enter the Dash address to receive your collateral: ")
 
+    if collateral_amount > 0:
+        tx = create_transaction([], {withdrawal_address: collateral_amount})
+        if broadcast_transaction(tx):
+            print(f"Withdrawn {collateral_amount} DASH from participant {participant_pubkey}")
+            del participants[participant_pubkey]  # Remove participant data after successful withdrawal
+        else:
+            print("Failed to broadcast the withdrawal transaction.")
+    else:
+        print("No collateral to withdraw for this participant.")
 
 # Function to check confirmations (Participant)
 def check_confirmations():
