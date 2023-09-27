@@ -1,6 +1,6 @@
 All available core wallet RPC Commands:
 
-Blockchain Commands Reference
+Blockchain Commands Reference NeoxaCore V5.1.1.4
 
 == Addressindex ==
 getaddressbalance
@@ -219,3 +219,4 @@ signmessage "address" "message"
 walletlock
 walletpassphrase "passphrase" timeout ( mixingonly )
 walletpassphrasechange "oldpassphrase" "newpassphrase"
+##LATEST AS OF NEOXA CORE V5.1.1.4##
