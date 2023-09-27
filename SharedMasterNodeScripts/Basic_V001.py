@@ -1,3 +1,5 @@
+##This code is being re-wrote to be for sending payments only without the jarbon##
+##Will be available under the neoxa MN scripts##
 import requests
 import json
 
