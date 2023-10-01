@@ -1,5 +1,5 @@
 ##MultiSig Script for OP Multisig Wallet with full user control##
-##TESTV0.00.01 <DASH BASED SCRIPT>##
+##TESTV0.00.02 <DASH BASED>
 # Initialize variables
 OP_FALSE
 
@@ -10,46 +10,47 @@ OP_FALSE
 <whitelisted_user3_public_key>
 <whitelisted_user4_public_key>
 <whitelisted_user5_public_key>
+OP_CHECKMULTISIGVERIFY
 
-OP_1 OP_PICK OP_VERIFY OP_ROLL OP_1 OP_NUMEQUAL
-OP_TOALTSTACK OP_SWAP
-OP_CHECKSIGVERIFY
-
-# Check if the collateral deposit is locked for a specific period
+# Check if the collateral deposit is locked for masternode
 <current_block_height> <lock_until_block_height> OP_LE
 OP_VERIFY
 
-# Proposal submission logic
-<proposal_submission_flag>
+# Masternode proposal submission logic
+<masternode_proposal_flag>
 
 OP_IF
-    # User's proposal
-    <user_proposed_raw_tx>
+    # User's masternode proposal
+    <user_masternode_proposal>
 
-    # User's signature for their proposal
+    # User's signature for their masternode proposal
     <user_signature> OP_CHECKSIGVERIFY
 
-    # Proposal data: title, description, amount, proposal ID, creator's address, comments, status, metadata, expiry, and rejection threshold
-    "Proposal Title" "Proposal Description" 1000 <proposal_id> <creator_address> "<proposal_comments>" "Pending" "<proposal_metadata>" <proposal_expiry_blocks> <proposal_rejection_threshold>
+    # Masternode proposal data: title, description, collateral amount, proposal ID, creator's address, comments, status, metadata, expiry, and rejection threshold
+    "Masternode Proposal Title" "Masternode Proposal Description" 1000 <proposal_id> <creator_address> "<proposal_comments>" "Pending" "<proposal_metadata>" <proposal_expiry_blocks> <proposal_rejection_threshold>
 
-    # Additional custom voting logic (e.g., participant votes)
-    <participant1_signature>
-    <participant2_signature>
-    <participant3_signature>
-    <participant4_signature>
-    <participant5_signature>
+    # Proposal locking once voting starts
+    <voting_start_block_height> <current_block_height> OP_LE
+    OP_VERIFY
 
-    # Count the number of participant votes
+    # Additional custom voting logic for masternode proposals (e.g., masternode operators' votes)
+    <masternode_operator1_public_key>
+    <masternode_operator2_public_key>
+    <masternode_operator3_public_key>
+    <masternode_operator4_public_key>
+    <masternode_operator5_public_key>
+
+    # Count the number of masternode operator votes
     0
     OP_TOALTSTACK
-    <participant1_signature> OP_NOTIF OP_1 OP_ENDIF
-    <participant2_signature> OP_NOTIF OP_1 OP_ENDIF
-    <participant3_signature> OP_NOTIF OP_1 OP_ENDIF
-    <participant4_signature> OP_NOTIF OP_1 OP_ENDIF
-    <participant5_signature> OP_NOTIF OP_1 OP_ENDIF
+    <masternode_operator1_public_key> OP_NOTIF OP_1 OP_ENDIF
+    <masternode_operator2_public_key> OP_NOTIF OP_1 OP_ENDIF
+    <masternode_operator3_public_key> OP_NOTIF OP_1 OP_ENDIF
+    <masternode_operator4_public_key> OP_NOTIF OP_1 OP_ENDIF
+    <masternode_operator5_public_key> OP_NOTIF OP_1 OP_ENDIF
     OP_FROMALTSTACK OP_ADD
 
-    # Dynamic voting threshold calculation (e.g., 50% of participants)
+    # Dynamic voting threshold calculation (e.g., 50% of masternode operators)
     OP_2 OP_DIV
     OP_TOALTSTACK
     OP_DUP
@@ -64,19 +65,11 @@ OP_IF
         OP_RETURN
     OP_ENDIF
 
-    # Participants can opt-out or be removed
-    <participant_opt_out_flag>
+    # Masternode operators can opt-out or be removed
+    <operator_opt_out_flag>
     OP_IF
-        # Participant opted out or was removed
+        # Operator opted out or was removed
         "Rejected"
-        OP_RETURN
-    OP_ENDIF
-
-    # Allow proposal editing before voting starts
-    <proposal_editing_flag>
-    OP_IF
-        # Participant can edit their proposal
-        "Pending"
         OP_RETURN
     OP_ENDIF
 
@@ -87,81 +80,10 @@ OP_IF
         OP_RETURN
     OP_ENDIF
 
-    # Proposal locking once voting starts
-    <voting_start_block_height> <current_block_height> OP_LE
+    # Redemption logic for masternode operators to reclaim their collateral
+    <operator_redemption_signature>
+    <current_block_height> <redemption_block_height> OP_LE
     OP_VERIFY
-
-    # Proposal and Amendment revocation
-    <proposal_revocation_flag>
-    OP_IF
-        # Participant can revoke their proposal
-        "Revoked"
-        OP_RETURN
-    OP_ENDIF
-
-    # Proposal amendment logic
-    <proposal_amendment_flag>
-    OP_IF
-        # User's amendment
-        <user_amendment_proposal>
-
-        # User's signature for their amendment
-        <user_amendment_signature> OP_CHECKSIGVERIFY
-
-        # Amendment data: title, description, metadata, expiry, and rejection threshold
-        "Amendment Title" "Amendment Description" "<amendment_metadata>" <amendment_expiry_blocks> <amendment_rejection_threshold>
-
-        # Amendment voting logic (e.g., participant votes)
-        <participant1_amendment_signature>
-        <participant2_amendment_signature>
-        <participant3_amendment_signature>
-        <participant4_amendment_signature>
-        <participant5_amendment_signature>
-
-        # Count the number of participant votes on the amendment
-        0
-        OP_TOALTSTACK
-        <participant1_amendment_signature> OP_NOTIF OP_1 OP_ENDIF
-        <participant2_amendment_signature> OP_NOTIF OP_1 OP_ENDIF
-        <participant3_amendment_signature> OP_NOTIF OP_1 OP_ENDIF
-        <participant4_amendment_signature> OP_NOTIF OP_1 OP_ENDIF
-        <participant5_amendment_signature> OP_NOTIF OP_1 OP_ENDIF
-        OP_FROMALTSTACK OP_ADD
-
-        # Dynamic voting threshold calculation for amendments (e.g., 60% of participants)
-        OP_10 OP_DIV
-        OP_TOALTSTACK
-        OP_DUP
-        OP_NUMEQUALVERIFY
-        OP_FROMALTSTACK
-        OP_NUMEQUALVERIFY
-
-        # If the voting threshold for amendments is met, allow amendment execution
-        OP_NOTIF
-            # Amendment execution logic (example)
-            <recipient_public_key_for_amendment> OP_CHECKSIGVERIFY
-
-            # Confirmation step for amendment execution
-            <participant1_amendment_signature>
-            <participant2_amendment_signature>
-            <participant3_amendment_signature>
-            <participant4_amendment_signature>
-            <participant5_amendment_signature>
-            <amendment_rejection_threshold> OP_NUMEQUALVERIFY
-            OP_IF
-                # Amendment execution confirmed by participants
-                "Approved"
-            OP_ELSE
-                # Amendment execution rejected by participants
-                "Rejected"
-            OP_ENDIF
-        OP_ENDIF
-    OP_ENDIF
+    <operator_signature> OP_CHECKSIGVERIFY
+    "Redemption" OP_RETURN
 OP_ENDIF
-
-# Redemption logic for users to reclaim their collateral
-<user_redemption_signature>
-<current_block_height> <redemption_block_height> OP_LE
-OP_VERIFY
-<user_signature> OP_CHECKSIGVERIFY
-"Redemption" OP_RETURN
