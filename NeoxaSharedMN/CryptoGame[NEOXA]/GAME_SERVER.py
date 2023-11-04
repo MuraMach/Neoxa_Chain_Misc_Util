@@ -49,5 +49,53 @@ way to get X from Y is by following the Merkle Root Hash tree.
 
 There is no limit of leaf levels and nodes. The only limit is BLOCK SIZE.
 
-100ln x 83b = 8.3 KB 
-200ln x 83b = 16.6 KB
+100ln x 83b = 8.3 KB ## May be off by 2ln
+200ln x 83b = 16.6 KB ## " <> "
+
+Creating a "Guess the Number" game inside a Merkle tree 
+involves structuring the game's data in a way that allows participants to guess
+numbers and verify results through the Merkle tree. 
+Here's an example of how you can structure the Merkle tree for this game:
+
+Assuming you want to create a game with 8 rounds (8 leaf nodes) where each round
+involves guessing a number, let's structure the tree:
+
+Level 0 (Root):
+Merkle Root Hash (Initial Hash): [Initial Hash Value]
+
+Level 1:
+Round 1 Hash: [Hash of Guess1]
+Round 2 Hash: [Hash of Guess2]
+Round 3 Hash: [Hash of Guess3]
+Round 4 Hash: [Hash of Guess4]
+Round 5 Hash: [Hash of Guess5]
+Round 6 Hash: [Hash of Guess6]
+Round 7 Hash: [Hash of Guess7]
+Round 8 Hash: [Hash of Guess8]
+
+Level 2:
+Round 1-2 Hash: [Hash of Round 1 Hash + Round 2 Hash]
+Round 3-4 Hash: [Hash of Round 3 Hash + Round 4 Hash]
+Round 5-6 Hash: [Hash of Round 5 Hash + Round 6 Hash]
+Round 7-8 Hash: [Hash of Round 7 Hash + Round 8 Hash]
+
+Level 3:
+Round 1-4 Hash: [Hash of Round 1-2 Hash + Round 3-4 Hash]
+Round 5-8 Hash: [Hash of Round 5-6 Hash + Round 7-8 Hash]
+
+Level 4 (Root):
+Merkle Root Hash (Final Hash): [Hash of Round 1-4 Hash + Round 5-8 Hash]
+
+In this structure, each "Guess" is stored in leaf nodes.
+Participants can submit their guesses for each round.
+The hashes of these guesses are combined in pairs,
+and the resulting hashes are further combined until you reach the root.
+The final root hash represents the collective result of all the rounds.
+
+To play the game, participants would submit their guesses and their corresponding
+round numbers. The Merkle tree's structure allows anyone to verify the results by
+comparing the final root hash with the expected value. If the guess is correct for
+each round, the root hash remains the same. If there's any tampering, the root hash will change.
+
+
+This Merkle tree structure provides an immutable and tamper-evident record of the game's results.
