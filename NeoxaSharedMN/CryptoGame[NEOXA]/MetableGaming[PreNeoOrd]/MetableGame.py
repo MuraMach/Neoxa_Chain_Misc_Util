@@ -19,6 +19,10 @@
 # SOFTWARE.
 
 
+#Todo: 
+#Finish full game , finish full results and full refactoring on tx fee
+#game works as is
+
 import json
 import requests
 
