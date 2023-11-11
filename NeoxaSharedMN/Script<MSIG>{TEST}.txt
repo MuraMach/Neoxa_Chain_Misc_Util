@@ -1,5 +1,9 @@
 ##MultiSig Script for OP Multisig Wallet with full user control##
+
 ##TESTV0.00.02 <DASH BASED>
+
+
+
 # Initialize variables
 OP_FALSE
 
