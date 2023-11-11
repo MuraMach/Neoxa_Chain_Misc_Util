@@ -1,6 +1,6 @@
-All available core wallet RPC Commands:
+##All available core wallet RPC Commands:##
 
-Blockchain Commands Reference NeoxaCore V5.1.1.4
+##Blockchain Commands Reference NeoxaCore V5.1.1.4##
 
 == Addressindex ==
 getaddressbalance
