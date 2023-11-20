@@ -100,6 +100,11 @@ def submit_game_result(game_id, board, winner):
         #refactoring needed for this in reverse         
     }
 
+
+    ####  game_info = f"Game ID: {game_id}, Winner: {winner}"
+    ####  hex_payload += game_info.encode().hex()
+    ####  includes id, winner , + gameboard
+    #### ^^ reflect changes and upload new script
     # Create
     raw_tx = rpc_call('createrawtransaction', [inputs, outputs])
 
