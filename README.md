@@ -1,5 +1,5 @@
-Community Driven.
+Community Driven, Helping too provide useful tools etc. for the Neoxa Blockchain.
 
-Helping too provide useful tools etc. for the Neoxa Blockchain.
+NeoxaSharedMN folder and sub folders contain all useful and working code.
 
-All repos to be merged here. No ETA Nov/7/23.
+Other directories will be merged or updated. They are used for preliminary purposes.
