@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neoxa Asset Platform</title>
+</head>
+<body>
+    <h1>Welcome to Neoxa Asset Platform</h1>
+    
+    <h2>Your Wallet Balance: {{ wallet_balance }}</h2>
+
+    <h3>Available Assets:</h3>
+    <ul>
+        {% for asset in assets %}
+            <li>{{ asset.name }} - {{ asset.balance }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Asset Actions:</h3>
+    <form action="/buy" method="post">
+        <label for="asset_name">Asset Name:</label>
+        <input type="text" name="asset_name" required>
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" required>
+        <button type="submit">Buy Asset</button>
+    </form>
+
+    <form action="/sell" method="post">
+        <label for="asset_name">Asset Name:</label>
+        <input type="text" name="asset_name" required>
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" required>
+        <button type="submit">Sell Asset</button>
+    </form>
+
+    <!-- Add links to other pages -->
+    <a href="/transactions">View Transactions</a>
+</body>
+</html>
