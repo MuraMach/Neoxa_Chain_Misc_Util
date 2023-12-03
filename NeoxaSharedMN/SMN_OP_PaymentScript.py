@@ -1,3 +1,4 @@
+#this works as is , going to be updated to a better version 
 import requests
 import json
 
