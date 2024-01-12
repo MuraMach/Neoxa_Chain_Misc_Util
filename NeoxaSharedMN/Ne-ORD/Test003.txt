@@ -1,0 +1,10 @@
+OP_HASH160 <redeemScriptHash> OP_EQUALVERIFY ### P2SH
+OP_FALSE
+OP_IF
+  OP_PUSH "Neoscript"
+  OP_PUSH 1
+  OP_PUSH "text/plain;charset=utf-8"
+  OP_PUSH 0
+  OP_PUSH "Neo,Ord"
+OP_ENDIF
+### End of Envelope ###
