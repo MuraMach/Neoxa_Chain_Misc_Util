@@ -8,3 +8,7 @@ OP_IF
   OP_PUSH "Neo,Ord"
 OP_ENDIF
 ### End of Envelope ###
+
+script = [OP_PUSHDATA1, len(hex_data) // 2] + [int(hex_data[i:i+2], 16) for i in range(0, len(hex_data), 2)]
+
+##Beta OP_PUSH1 520B##
