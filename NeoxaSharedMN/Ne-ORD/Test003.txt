@@ -8,7 +8,16 @@ OP_IF
   OP_PUSH "Neo,Ord"
 OP_ENDIF
 ### End of Envelope ###
-
+~》
 script = [OP_PUSHDATA1, len(hex_data) // 2] + [int(hex_data[i:i+2], 16) for i in range(0, len(hex_data), 2)]
-
 ##Beta OP_PUSH1 520B##
+p2sh_script = CScript([
+    CScript.OP_HASH160, redeemScriptHash, CScript.OP_EQUAL,
+    CScript.OP_IF,
+        CScript.OP_PUSHDATA1, b'\x03', b'ord',  # OP_PUSH "ord"
+        CScript.OP_PUSHDATA1, b'\x01', b'\x01',  # OP_PUSH 1
+        CScript.OP_PUSHDATA1, b'\x19', b'text/plain;charset=utf-8',  # OP_PUSH "text/plain;charset=utf-8"
+        CScript.OP_PUSHDATA1, b'\x01', b'\x00',  # OP_PUSH 0
+        CScript.OP_PUSHDATA1, b'\x0C', b'Hello, world!',  # OP_PUSH "Hello, world!"
+    CScript.OP_ENDIF
+])
