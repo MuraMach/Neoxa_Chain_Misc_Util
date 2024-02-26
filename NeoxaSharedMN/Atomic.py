@@ -188,3 +188,4 @@ if send_transaction(participant_tx):
 # This can be done using a separate thread or process that monitors the blockchain for the locktime expiry
 # For demonstration purposes, refunding is not implemented in this script
 # Dash to Neoxa port needed. Assets not implemented in this version. 
+#/Unpaid - attempt to build in spare time/
